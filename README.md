@@ -20,7 +20,7 @@ TBD
 
 ## Demo Diagram
 
-![Diagram](demo-driagram.jpg?raw=true "Diagram")
+![Diagram](demo-diagram.jpg?raw=true "Diagram")
 
 ## Attack Description
 
