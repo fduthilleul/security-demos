@@ -18,6 +18,10 @@ oc apply -k .
 
 TBD
 
+## Demo Diagram
+
+![Diagram](demo-driagram.jpg?raw=true "Diagram")
+
 ## Attack Description
 
 In this scenario, the attacker starts by gaining access to "asset-cache," which may have a vulnerability that the attacker can exploit to gain control of the container. Once the attacker has control of "asset-cache," they then use it as a jumping-off point to try and gain access to "visa-processor."
