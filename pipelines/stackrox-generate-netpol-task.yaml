@@ -18,7 +18,7 @@ spec:
   - description: |
       The directory under 'source' workspace to write connectivity report file
           into.
-    name: output-dir
+    name: netpol-path
     type: string
   - description: |
       Enable DNS Rules for Openshift - Port 5353.
@@ -27,14 +27,14 @@ spec:
   steps:
   - env:
     - name: PARAMS_OUTPUT_DIR
-      value: $(params.output-dir)
+      value: $(params.netpol-path)
     image: quay.io/ralvares/npguard
     name: rox-generate-netpol
     resources: {}
     script: |
       #!/usr/bin/env bash
-      kustomize build $(params.output-dir) > /tmp/all.yaml
-      /bin/roxctl generate netpol /tmp/all.yaml > $(params.output-dir)/netpols.yaml && if [ "$(params.openshift)" = "true" ]; then sed -i 's/port: 53/port: 5353/' $(params.output-dir)/netpols.yaml; fi && cd $(params.output-dir); kustomize edit add resource netpols.yaml
+      kustomize build $(params.netpol-path) > /tmp/all.yaml
+      /bin/roxctl generate netpol /tmp/all.yaml > $(params.netpol-path)/netpols.yaml && if [ "$(params.openshift)" = "true" ]; then sed -i 's/port: 53/port: 5353/' $(params.netpol-path)/netpols.yaml; fi && cd $(params.netpol-path); kustomize edit add resource netpols.yaml
     workingDir: $(workspaces.source.path)
   workspaces:
   - name: source

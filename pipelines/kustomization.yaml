@@ -7,3 +7,6 @@ resources:
 - stackrox-image-scan.yaml
 - stackrox-deployment-check.yaml
 - rhacs-demo-pipeline.yaml
+- stackrox-generate-netpol-task.yaml
+- npguard-netpol-report-task.yaml
+- shiftleft-netpol-pipeline.yaml
