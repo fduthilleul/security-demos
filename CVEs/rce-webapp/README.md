@@ -10,8 +10,9 @@ this is designed and built to be a remote execution vulnerability, for security 
 - Makes HTTP requests to a list of hosts and ports every 30 seconds, specified by the `--connect` flag (optional)
 
 ## Usage
-
+```
 go run entrypoint.go --listen=:8080 --connect=example.com:80,google.com:80
+```
 
 
 ### Flags
