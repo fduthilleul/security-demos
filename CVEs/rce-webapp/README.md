@@ -55,5 +55,11 @@ Make a POST request to `http://localhost:8080/posts` with the `cmd` argument set
 
 ```
 $ export exploit=true
+$ go run entrypoint.go --listen=127.0.0.1:8080 --connect=example.com:80,google.com:80
+```
+
+Open other terminal and run
+
+```
 $ curl -X POST -d "cmd=echo hello" http://localhost:8080/posts
 ```
