@@ -20,13 +20,17 @@ TBD
 
 ## Demo Diagram
 
-![Diagram](demo-diagram.jpg?raw=true "Diagram")
+![Diagram](demo-diagram.png?raw=true "Diagram")
 
 ## Attack Description
 
 In this scenario, the attacker starts by gaining access to "asset-cache," which may have a vulnerability that the attacker can exploit to gain control of the container. Once the attacker has control of "asset-cache," they then use it as a jumping-off point to try and gain access to "visa-processor."
 
 To do this, the attacker may use exploits or other techniques to move laterally within the network, potentially taking advantage of vulnerabilities in other containers or network components to gain access to additional systems. Once the attacker has gained access to "visa-processor," they may attempt to establish persistence within the network, allowing them to maintain access even if their initial entry point is discovered and blocked.
+
+## Attack Flow
+
+![Diagram](demo-diagram-attack-flow.png?raw=true "Diagram")
 
 ## Attack Environment
 
