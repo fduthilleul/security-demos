@@ -65,8 +65,8 @@ function get_deployment_image_details() {
 }
 
 #get_deployment $1
-get_deployment_detailed $1
+#get_deployment_detailed $1
 #get_deployment_processes $1
 #get_deployment_processes_grouped $1
 get_deployment_processes_grouped_container $1
-get_deployment_image_details $1
+#get_deployment_image_details $1
