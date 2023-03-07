@@ -62,6 +62,7 @@ The scripts are designed to demo a few security use cases, meaning the target ar
 - **attack_001.sh** will use asset-cache as a steping stone to access the visa-processe service account token.
 
 ```
+Security Demo -> cd attack
 Security Demo -> ./attack_001.sh http://asset-cache-frontend.apps.cluster.local/                
 ☺ - Target asset-cache-84bc5779ff-lsq2n Exploited
 ☺ - Next Phase: Lateral Movement ...
@@ -80,6 +81,7 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6ImNsbXFWcGppX1BQX1NHd....
 - **attack_002.sh** will use the token extracted from the first attack and run kubectl exec to install netcat and run a reverse shell. Kube API needs to be accessible. 
 
 ```
+Security Demo -> cd attack
 Security Demo -> ./attack_002.sh https://api.ocp.cluster.local:6443                                                                           
 ☠ - Getting access to pod visa-processor-6d764fc488-qzjxl
 
@@ -106,6 +108,7 @@ netcat is already the newest version (1.10-41).
 - **attack_003.sh** - will use asset-cache as a stepping stone to to install netcat and run a reverse shell without the need to kubectl exec or token :D
 
 ```
+Security Demo -> cd attack
 Security Demo -> ./attack_003.sh http://asset-cache-frontend.apps.cluster.local/                                                              1
 PoC CVE-2021-42013 reverse shell Apache 2.4.50 with CGI
 Exploiting deployment...
