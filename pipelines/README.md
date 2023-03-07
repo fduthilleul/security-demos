@@ -21,7 +21,7 @@ For a pipeline to retrieve resources from repositories configured with SSH keys,
 
 ```
 ssh-keygen -t rsa -b 4096 -C "tekton@tekton.dev" -f id_rsa
-kubectl create secret generic git-ssh-key --from-file=ssh-privatekey=id_rsa -n pipeline-demo
+oc create secret generic git-ssh-key --from-file=ssh-privatekey=id_rsa -n pipeline-demo
 oc annotate secret git-ssh-key tekton.dev/git-0=github.com -n pipeline-demo
 oc patch serviceaccount pipeline -p '{"secrets": [{"name": "git-ssh-key"}]}' -n pipeline-demo
 ```
