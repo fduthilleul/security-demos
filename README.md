@@ -61,6 +61,14 @@ To mitigate the security risks outlined in the previous conversation, I would re
 
 - Apply network policies to enforce network segmentation within the Kubernetes cluster. This can help prevent lateral movement by attackers who gain access to one part of the system.
 
+### Generating Network Policies using roxctl (np-guard)
+Follow how simple is to create network policies using roxctl generate netpol 
+```
+git clone https://github.com/ralvares/security-demos
+cd security-demos/manifests
+roxctl generate netpol . | oc apply -f -
+```
+
 By following these steps, organizations can reduce the likelihood of a successful attack against their Kubernetes cluster, and limit the damage that an attacker could cause if they were able to gain access to the system. It is important to keep in mind, however, that security is an ongoing process and requires regular attention and maintenance to stay effective.
 
 ## Scripts

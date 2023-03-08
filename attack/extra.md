@@ -38,7 +38,7 @@ drwxr-xr-x.  17 root root 219 Feb 22 13:55 var
 ### Deactivate the RCE
 
 ```
-oc -n frontend set env deployment/webapp exploit=false
+oc -n frontend set env deployment/webapp exploit-
 
 export cmd="ls -la"
 

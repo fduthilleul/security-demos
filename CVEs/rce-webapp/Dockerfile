@@ -8,6 +8,6 @@ FROM registry.access.redhat.com/ubi9/ubi-micro
 
 COPY --from=builder /app/entrypoint /bin
 
-ENV exploit=true
+ENV exploit=false
 
 entrypoint ["/bin/entrypoint"]
