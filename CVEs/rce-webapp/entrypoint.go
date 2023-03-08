@@ -37,7 +37,7 @@ func main() {
 				}
 				fmt.Fprintf(w, "output: %s\n", out)
 			} else {
-				fmt.Fprint(w, "exploit is not enabled\n")
+				fmt.Fprint(w, "RCE is not enabled\n")
 			}
 		})
 		go func() {
