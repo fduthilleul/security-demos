@@ -79,7 +79,7 @@ spec:
         matchLabels:
           app: gateway
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
   ingress:
   - from:
@@ -125,7 +125,7 @@ spec:
         matchLabels:
           app: visa-processor
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
   ingress:
   - from:
@@ -211,7 +211,7 @@ spec:
         matchLabels:
           app: catalog
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
   ingress:
   - from:
@@ -271,7 +271,7 @@ spec:
         matchLabels:
           app: recommendation
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
   ingress:
   - from:
@@ -395,7 +395,7 @@ spec:
         matchLabels:
           app: shipping
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
   podSelector:
     matchLabels:
