@@ -1,0 +1,1 @@
+Network policies can be very difficult to create correctly because even a small mistake in the configuration can have a big impact on connectivity. For example, if you add an extra dash to the configuration, it can allow all connections instead of just the ones you want.
