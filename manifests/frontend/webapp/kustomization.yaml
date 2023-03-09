@@ -4,3 +4,4 @@ namespace: frontend
 resources:
 - configmap.yaml
 - deployment.yaml
+- route.yaml

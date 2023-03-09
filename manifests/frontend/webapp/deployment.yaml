@@ -8,6 +8,7 @@ metadata:
   namespace: frontend
   labels:
     app: webapp
+    exposed: "true"
     app.kubernetes.io/part-of: frontend
 spec:
   replicas: 1
@@ -33,7 +34,7 @@ spec:
           name: webapp
           envFrom:
             - configMapRef:
-                name: endpoint-config
+                name: webapp-endpoint-config
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -56,19 +57,3 @@ spec:
   selector:
     app: webapp
   type: ClusterIP
----
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  name: webapp 
-  namespace: frontend 
-  labels:
-    app: webapp
-spec:
-  to:
-    kind: Service
-    name: webapp-service
-    weight: 100
-  port:
-    targetPort: http
-  wildcardPolicy: None
