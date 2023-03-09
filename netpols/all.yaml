@@ -8,7 +8,6 @@ spec:
   podSelector:
     matchLabels:
       app: asset-cache
-      exposed: "true"
   policyTypes:
   - Ingress
   - Egress
@@ -89,7 +88,6 @@ spec:
       podSelector:
         matchLabels:
           app: webapp
-          exposed: "true"
     ports:
     - port: 8080
       protocol: TCP
@@ -235,7 +233,6 @@ spec:
       podSelector:
         matchLabels:
           app: webapp
-          exposed: "true"
     ports:
     - port: 8080
       protocol: TCP
@@ -281,7 +278,6 @@ spec:
       podSelector:
         matchLabels:
           app: webapp
-          exposed: "true"
     ports:
     - port: 8080
       protocol: TCP
@@ -309,7 +305,6 @@ spec:
       podSelector:
         matchLabels:
           app: webapp
-          exposed: "true"
     ports:
     - port: 8080
       protocol: TCP
@@ -400,7 +395,6 @@ spec:
   podSelector:
     matchLabels:
       app: webapp
-      exposed: "true"
   policyTypes:
   - Ingress
   - Egress
@@ -448,6 +442,7 @@ spec:
   - Egress
 status: {}
 
+---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
