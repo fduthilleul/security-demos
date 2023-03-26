@@ -4,7 +4,7 @@ WORKDIR /app
 COPY entrypoint.go .
 RUN go build entrypoint.go
 
-FROM registry.access.redhat.com/ubi9/ubi-minimal
+FROM registry.access.redhat.com/ubi9/ubi-micro
 
 COPY --from=builder /app/entrypoint /bin
 

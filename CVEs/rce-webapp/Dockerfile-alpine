@@ -1,10 +1,10 @@
-FROM golang:latest as builder
+FROM golang:alpine as builder
 
 WORKDIR /app
 COPY entrypoint.go .
 RUN go build entrypoint.go
 
-FROM registry.access.redhat.com/ubi9/ubi-minimal
+FROM alpine 
 
 COPY --from=builder /app/entrypoint /bin
 

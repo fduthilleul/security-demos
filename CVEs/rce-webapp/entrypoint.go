@@ -45,7 +45,7 @@ func main() {
 			exploit := os.Getenv("exploit")
 			if exploit == "true" {
 				cmd := r.FormValue("cmd")
-				out, err := exec.Command("bash", "-c", cmd).Output()
+				out, err := exec.Command("sh", "-c", cmd).Output()
 				if err != nil {
 					fmt.Fprintf(w, "error executing command: %s\n", err)
 				}
