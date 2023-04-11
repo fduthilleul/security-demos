@@ -59,3 +59,6 @@ export ROX_API_TOKEN=$(cat ~/token)
 ```
 
 The jq command provided will only output the entries where the suspicious field is true, The output will have the following fields in order: container name, container ID, time, name, args, execFilePath, pid, uid, gid.
+
+# Generating network policies using the acs baseline from the pipeline
+
