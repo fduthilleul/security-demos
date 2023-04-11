@@ -59,9 +59,9 @@ spec:
         --output ./roxctl  \
         > /dev/null
       chmod +x ./roxctl  > /dev/null
-      echo $(params.deployment) | base64 -d > deployment.yaml
-      cat deployment.yaml
+      echo $(params.deployment) | base64 -d > /tmp/all.yaml
+      cat /tmp/all.yaml
       ./roxctl deployment check \
         $( [ "$(params.insecure-skip-tls-verify)" = "true" ] && \
         echo -n "--insecure-skip-tls-verify") \
-        -e "$ROX_CENTRAL_ENDPOINT" -f deployment.yaml
+        -e "$ROX_CENTRAL_ENDPOINT" -f /tmp/all.yaml

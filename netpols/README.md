@@ -5,3 +5,5 @@ git clone https://github.com/ralvares/security-demos
 cd security-demos/manifests
 roxctl generate netpol . | sed 's/port: 53/port: 5353/' | oc apply -f -
 ```
+
+# Generating network policies using the acs baseline from the pipeline
