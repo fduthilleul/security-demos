@@ -22,7 +22,7 @@ spec:
         app: gateway
     spec:
       containers:
-        - image: quay.io/vuln/rce-webapp:latest
+        - image: quay.io/vuln/rce-webapp:alpine
           command: ["/bin/entrypoint"]
           args:
             [
