@@ -1,15 +1,15 @@
-FROM maven as builder 
+FROM cgr.dev/chainguard/maven as builder 
 
-COPY . /usr/src/poc
-WORKDIR /usr/src/poc
-RUN sed -i 's/2.14.1/2.17.1/' pom.xml && mvn clean && mvn package
+COPY . /home/build
+WORKDIR /home/build
+RUN rm -rf target && sed -i 's/2.14.1/2.17.1/' pom.xml && mvn clean && mvn package
 
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM debian:9
 
 COPY src/entrypoint /bin/
 
 USER 1001
 
-COPY --from=builder /usr/src/poc/target/log4j-rce-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/app-root/src/
+COPY --from=builder /home/build/target/log4j-rce-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/app-root/src/
 
 ENTRYPOINT /bin/entrypoint

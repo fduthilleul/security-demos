@@ -1,15 +1,15 @@
-FROM maven as builder 
+FROM cgr.dev/chainguard/maven as builder 
 
-COPY . /usr/src/poc
-WORKDIR /usr/src/poc
-RUN mvn clean && mvn package
+COPY . /home/build
+WORKDIR /home/build
+RUN rm -rf target && mvn clean && mvn package
 
-FROM debian:8
+FROM debian:9
 
 COPY src/entrypoint /bin/
 
 USER 1001
 
-COPY --from=builder /usr/src/poc/target/log4j-rce-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/app-root/src/
+COPY --from=builder /home/build/target/log4j-rce-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/app-root/src/
 
 ENTRYPOINT /bin/entrypoint
