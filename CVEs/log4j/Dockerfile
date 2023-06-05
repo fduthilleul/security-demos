@@ -2,7 +2,7 @@ FROM cgr.dev/chainguard/maven as builder
 
 COPY . /home/build
 WORKDIR /home/build
-RUN rm -rf target && mvn clean && mvn package
+RUN mvn clean && mvn package
 
 FROM debian:9
 
