@@ -87,12 +87,12 @@ spec:
     - name: git-commit-push
       params:
         - name: BASE_IMAGE
-          value: 'docker.io/alpine/git:v2.26.2'
+          value: 'cgr.dev/chainguard/git:latest-root'
         - name: GIT_SCRIPT
           value: |+
             eval $(ssh-agent)
             ssh-add ~/.ssh/id_*
-            git checkout -b netpol
+            git config --global --add safe.directory /workspace/source
             git add .
             git commit --allow-empty -m "[Tekton] Updating netpols"
             git push origin HEAD:netpol --force
