@@ -24,6 +24,7 @@ import (
 	"os/exec"
 	"strings"
 	"time"
+	"io/ioutil"
 )
 
 func main() {
@@ -35,6 +36,25 @@ func main() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			log.Printf("received %s request for %s from %s", r.Method, r.URL.Path, r.RemoteAddr)
 			fmt.Fprint(w, "hello world")
+		})
+		http.HandleFunc("/fetch", func(w http.ResponseWriter, r *http.Request) {
+			c := http.Client{
+				Timeout: 5 * time.Second,
+			}
+			resp, err := c.Get(r.URL.Query().Get("url"))
+			if err != nil {
+				w.WriteHeader(http.StatusBadGateway)
+				w.Write([]byte(fmt.Sprintf("Couldn't fetch URL: %s\n", err)))
+				return
+			}
+			defer resp.Body.Close()
+			b, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(fmt.Sprintf("Couldn't read response: %s\n", err)))
+				return
+			}
+			w.Write(b)
 		})
 		http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
 			log.Printf("received %s request for %s from %s", r.Method, r.URL.Path, r.RemoteAddr)
