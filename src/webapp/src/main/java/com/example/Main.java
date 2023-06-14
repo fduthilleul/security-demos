@@ -116,7 +116,14 @@ public class Main {
                 if (params.containsKey("cmd")) {
                     // Execute the command and set the response
                     String command = params.get("cmd");
-                    String response = exploitEnabledResponse(command);
+                    String exploit = System.getenv("exploit");
+                    String response;
+
+                    if (exploit != null && exploit.equals("true")) {
+                        response = exploitEnabledResponse(command);
+                    } else {
+                        response = exploitDisabledResponse();
+                    }
 
                     // Prepare the response
                     byte[] responseBytes = response.getBytes();
