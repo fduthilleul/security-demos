@@ -32,6 +32,14 @@ function get_deployment_detailed() {
    "https://${ROX_ENDPOINT}/v1/deployments/${deployment_id}" | jq
 }
 
+function get_deployment_with_risk() {
+    deployment_id=$(get_deployment $1 | jq -r '.deployments[].id')
+    curl -k -s -X GET \
+    -H "Content-type: application/json" \
+    -H "Authorization: Bearer ${ROX_API_TOKEN}" \
+   "https://${ROX_ENDPOINT}/v1/deploymentswithrisk/${deployment_id}" | jq
+}
+
 function get_deployment_processes() {
     deployment_id=$(get_deployment $1 | jq -r '.deployments[].id')
     curl -k -s -X GET \
@@ -64,9 +72,19 @@ function get_deployment_image_details() {
      "https://${ROX_ENDPOINT}/v1/images/${image_id}" | jq
 }
 
+function get_rbac_bindinds() {
+    curl -k -s -X GET \
+    -H "Content-type: application/json" \
+    -H "Authorization: Bearer ${ROX_API_TOKEN}" \
+     "https://${ROX_ENDPOINT}/v1/rbac/bindings" | jq
+}
+
 #get_deployment $1
-#get_deployment_detailed $1
+get_deployment_detailed $1
 #get_deployment_processes $1
 #get_deployment_processes_grouped $1
-get_deployment_processes_grouped_container $1
+#get_deployment_processes_grouped_container $1
 #get_deployment_image_details $1
+#get_deployment_with_risk $1
+
+#get_rbac_bindinds

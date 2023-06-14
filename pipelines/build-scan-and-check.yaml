@@ -1,0 +1,83 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-scan-and-check
+  namespace: pipeline-demo
+spec:
+  params:
+    - default: 'quay.io/ralvares/rhacs-demo:log4j'
+      name: IMAGE_NAME
+      type: string
+    - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/shiftleft-netpol.git'
+      name: GIT_REPO
+      type: string
+    - default: main
+      name: GIT_REVISION
+      type: string
+  tasks:
+    - name: fetch-repository
+      params:
+        - name: url
+          value: $(params.GIT_REPO)
+        - name: revision
+          value: $(params.GIT_REVISION)
+        - name: subdirectory
+          value: ''
+        - name: deleteExisting
+          value: 'true'
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: build
+      params:
+        - name: IMAGE
+          value: $(params.IMAGE_NAME)
+        - name: TLSVERIFY
+          value: 'false'
+        - name: CONTEXT
+          value: CVEs/log4j
+      runAfter:
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: buildah
+      workspaces:
+        - name: source
+          workspace: workspace
+    - name: stackrox-image-check
+      params:
+        - name: rox_central_endpoint
+          value: roxsecrets
+        - name: rox_api_token
+          value: roxsecrets
+        - name: image
+          value: $(params.IMAGE_NAME)
+        - name: insecure-skip-tls-verify
+          value: 'true'
+      runAfter:
+        - stackrox-image-scan
+      taskRef:
+        kind: Task
+        name: stackrox-image-check
+    - name: stackrox-image-scan
+      params:
+        - name: rox_central_endpoint
+          value: roxsecrets
+        - name: rox_api_token
+          value: roxsecrets
+        - name: image
+          value: $(params.IMAGE_NAME)
+        - name: output_format
+          value: table
+        - name: insecure-skip-tls-verify
+          value: 'false'
+      runAfter:
+        - build
+      taskRef:
+        kind: Task
+        name: stackrox-image-scan
+  workspaces:
+    - name: workspace

@@ -21,14 +21,14 @@ spec:
         app: webapp
     spec:
       containers:
-        - image: quay.io/vuln/rce-webapp:latest
-          command: ["/bin/entrypoint"]
+        - image: quay.io/vuln/webapp:latest
+          command: ["java"]
           args:
             [
-              "-listen",
-              ":8080",
-              "-connect",
-              "$(CHECKOUT_ADDR):$(CHECKOUT_PORT),$(REPORT_GENERATOR_SERVICE_ADDR):$(REPORT_GENERATOR_SERVICE_PORT),$(RECOMMENDATION_ADDR):$(RECOMMENDATION_PORT),$(SHIPPING_ADDR):$(SHIPPING_PORT)",
+              "-jar",
+	            "-Dlisten=8080",
+              "-Dconnect=$(CHECKOUT_ADDR):$(CHECKOUT_PORT),$(REPORT_GENERATOR_SERVICE_ADDR):$(REPORT_GENERATOR_SERVICE_PORT),$(RECOMMENDATION_ADDR):$(RECOMMENDATION_PORT),$(SHIPPING_ADDR):$(SHIPPING_PORT)",
+              "/opt/app-root/src/webapp-1.0.jar",
             ]
           imagePullPolicy: Always
           name: webapp
