@@ -10,4 +10,4 @@ ENV exploit=false
 
 USER 1001
 
-COPY --from=builder /usr/src/poc/target/gateway-1.0-jar-with-dependencies.jar /opt/app-root/src/gateway-1.0.jar
+COPY --from=builder /usr/src/poc/target/gateway-1.0-jar-with-dependencies.jar /deployments/gateway-1.0-jar-with-dependencies.jar

@@ -29,7 +29,7 @@ spec:
               "-jar",
 	            "-Dlisten=8080",
               "-Dconnect=$(VISA_SERVICE_ADDR):$(VISA_SERVICE_PORT),$(MASTER_SERVICE_ADDR):$(MASTER_SERVICE_PORT)",
-              "/opt/app-root/src/gateway-1.0.jar",
+              "/deployments/gateway-1.0-jar-with-dependencies.jar",
             ]
           imagePullPolicy: Always
           name: gateway

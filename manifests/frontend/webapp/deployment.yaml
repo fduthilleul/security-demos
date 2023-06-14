@@ -28,7 +28,7 @@ spec:
               "-jar",
 	            "-Dlisten=8080",
               "-Dconnect=$(CHECKOUT_ADDR):$(CHECKOUT_PORT),$(REPORT_GENERATOR_SERVICE_ADDR):$(REPORT_GENERATOR_SERVICE_PORT),$(RECOMMENDATION_ADDR):$(RECOMMENDATION_PORT),$(SHIPPING_ADDR):$(SHIPPING_PORT)",
-              "/opt/app-root/src/webapp-1.0.jar",
+              "/deployments/webapp-1.0-jar-with-dependencies.jar",
             ]
           imagePullPolicy: Always
           name: webapp

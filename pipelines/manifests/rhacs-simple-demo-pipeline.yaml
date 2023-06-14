@@ -3,7 +3,7 @@ kind: Pipeline
 metadata:
   creationTimestamp: "2023-02-28T09:10:07Z"
   generation: 5
-  name: rhacs-demo-pipeline
+  name: rhacs-simple-demo-pipeline
   namespace: pipeline-demo
   resourceVersion: "79883"
   uid: 6a3264cd-1ea6-409e-8a3b-d2b4473293a9
@@ -39,7 +39,7 @@ spec:
     taskRef:
       kind: Task
       name: stackrox-image-check
-  - name: stackrox-deployment-check
+  - name: stackrox-simple-deployment-check
     params:
     - name: rox_central_endpoint
       value: roxsecrets
@@ -53,4 +53,4 @@ spec:
     - stackrox-image-scan
     taskRef:
       kind: Task
-      name: stackrox-deployment-check
+      name: stackrox-simple-deployment-check

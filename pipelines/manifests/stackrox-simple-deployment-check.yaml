@@ -7,7 +7,7 @@ metadata:
     tekton.dev/tags: security
   labels:
     app.kubernetes.io/version: "0.1"
-  name: stackrox-deployment-check
+  name: stackrox-simple-deployment-check
   namespace: pipeline-demo
 spec:
   description: "Policy check a deployment with StackRox/RHACS\nThis tasks allows you

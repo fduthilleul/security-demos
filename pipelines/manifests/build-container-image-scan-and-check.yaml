@@ -1,14 +1,14 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-scan-and-check
+  name: build-container-image-scan-and-check
   namespace: pipeline-demo
 spec:
   params:
-    - default: 'quay.io/ralvares/rhacs-demo:log4j'
+    - default: 'ttl.sh/webapp-log4j-container:24h'
       name: IMAGE_NAME
       type: string
-    - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/shiftleft-netpol.git'
+    - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/rhacs-app-demo.git'
       name: GIT_REPO
       type: string
     - default: main
@@ -38,7 +38,7 @@ spec:
         - name: TLSVERIFY
           value: 'false'
         - name: CONTEXT
-          value: CVEs/log4j
+          value: src/webapp
       runAfter:
         - fetch-repository
       taskRef:
