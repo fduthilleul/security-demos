@@ -48,7 +48,7 @@ public class Main {
                     System.out.println("Response from " + hostname + ":" + port + ": " + responseCode);
                     connection.disconnect();
                 }
-                Thread.sleep(1000); // Wait for 1 second before making the next round of connections
+                Thread.sleep(10000); // Wait for 1 second before making the next round of connections
             }
         }
     }
