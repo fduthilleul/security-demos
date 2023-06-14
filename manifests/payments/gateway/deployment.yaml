@@ -22,14 +22,14 @@ spec:
         app: gateway
     spec:
       containers:
-        - image: quay.io/vuln/rce-webapp:alpine
-          command: ["/bin/entrypoint"]
+        - image: quay.io/vuln/gateway:latest
+          command: ["java"]
           args:
             [
-              "-listen",
-              ":8080",
-              "-connect",
-              "$(VISA_SERVICE_ADDR):$(VISA_SERVICE_PORT),$(MASTER_SERVICE_ADDR):$(MASTER_SERVICE_PORT)",
+              "-jar",
+	            "-Dlisten=8080",
+              "-Dconnect=$(VISA_SERVICE_ADDR):$(VISA_SERVICE_PORT),$(MASTER_SERVICE_ADDR):$(MASTER_SERVICE_PORT)",
+              "/opt/app-root/src/gateway-1.0.jar",
             ]
           imagePullPolicy: Always
           name: gateway
