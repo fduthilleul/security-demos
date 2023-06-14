@@ -73,11 +73,25 @@ spec:
         - name: output_format
           value: table
         - name: insecure-skip-tls-verify
-          value: 'false'
+          value: 'true'
       runAfter:
         - build
       taskRef:
         kind: Task
         name: stackrox-image-scan
+    - name: update-webapp-deployment
+      params:
+        - name: SCRIPT
+          value: ' oc -n frontend set image deployment/webapp webapp=$(params.IMAGE_NAME)'
+        - name: VERSION
+          value: latest
+      runAfter:
+        - stackrox-image-check
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+      workspaces:
+        - name: manifest-dir
+          workspace: workspace
   workspaces:
     - name: workspace
