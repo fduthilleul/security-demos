@@ -43,6 +43,24 @@ public class Main {
                         connection.setRequestMethod("GET");
                         int responseCode = connection.getResponseCode();
                         System.out.println("Response from " + hostname + ":" + port + ": " + responseCode);
+                        
+                        if (responseCode == HttpURLConnection.HTTP_OK) {
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                            StringBuilder response = new StringBuilder();
+                            String line;
+
+                            while ((line = reader.readLine()) != null) {
+                                response.append(line);
+                            }
+
+                            reader.close();
+                            String htmlContent = response.toString();
+
+                            if (!htmlContent.isEmpty()) {
+                                System.out.println("OK");
+                            }
+                        }
+
                         connection.disconnect();
                     } catch (IOException e) {
                         System.out.println("Connection to " + hostname + ":" + port + " failed: " + e.getMessage());
