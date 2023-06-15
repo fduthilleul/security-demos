@@ -53,7 +53,7 @@ public class Main {
                     }
                 }
                 try {
-                    Thread.sleep(30000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
