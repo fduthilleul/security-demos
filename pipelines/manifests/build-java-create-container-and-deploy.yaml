@@ -1,11 +1,11 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: s2i-build-and-deploy
+  name: build-java-create-container-and-deploy
   namespace: pipeline-demo
 spec:
   params:
-    - default: 'ttl.sh/webapp-log4j-s2i:24h'
+    - default: 'ttl.sh/webapp-log4j-distroless:24h'
       name: IMAGE_NAME
       type: string
     - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/rhacs-app-demo.git'
@@ -31,26 +31,6 @@ spec:
       workspaces:
         - name: output
           workspace: workspace
-    - name: build
-      params:
-        - name: IMAGE
-          value: $(params.IMAGE_NAME)
-        - name: TLSVERIFY
-          value: 'false'
-        - name: SKIP_PUSH
-          value: ''
-        - name: PATH_CONTEXT
-          value: src/webapp
-        - name: MAVEN_CLEAR_REPO
-          value: 'true'
-      runAfter:
-        - fetch-repository
-      taskRef:
-        kind: ClusterTask
-        name: s2i-java
-      workspaces:
-        - name: source
-          workspace: workspace
     - name: stackrox-image-scan
       params:
         - name: rox_central_endpoint
@@ -66,7 +46,7 @@ spec:
         - name: insecure-skip-tls-verify
           value: 'true'
       runAfter:
-        - build
+        - java-jre-distroless
       taskRef:
         kind: Task
         name: stackrox-image-scan
@@ -92,17 +72,75 @@ spec:
     - name: update-webapp-deployment
       params:
         - name: SCRIPT
-          value: oc -n frontend set image deployment/webapp webapp=$(params.IMAGE_NAME)
+          value: >-
+            oc -n frontend set image deployment/webapp
+            webapp=$(params.IMAGE_NAME)
         - name: VERSION
           value: latest
+      runAfter:
+        - stackrox-image-check
       taskRef:
         kind: ClusterTask
         name: openshift-client
       workspaces:
         - name: manifest-dir
           workspace: workspace
+    - name: building-java-artifact
+      params:
+        - name: MAVEN_IMAGE
+          value: >-
+            image-registry.openshift-image-registry.svc:5000/openshift/java:latest
+        - name: GOALS
+          value:
+            - package
+        - name: MAVEN_MIRROR_URL
+          value: ''
+        - name: SERVER_USER
+          value: ''
+        - name: SERVER_PASSWORD
+          value: ''
+        - name: PROXY_USER
+          value: ''
+        - name: PROXY_PASSWORD
+          value: ''
+        - name: PROXY_PORT
+          value: ''
+        - name: PROXY_HOST
+          value: ''
+        - name: PROXY_NON_PROXY_HOSTS
+          value: ''
+        - name: PROXY_PROTOCOL
+          value: http
+        - name: CONTEXT_DIR
+          value: src/webapp
       runAfter:
-        - stackrox-image-check
+        - fetch-repository
+      taskRef:
+        kind: ClusterTask
+        name: maven
+      workspaces:
+        - name: source
+          workspace: workspace
+        - name: maven-settings
+          workspace: workspace
+    - name: java-jre-distroless
+      params:
+        - name: PATH_CONTEXT
+          value: src/webapp
+        - name: IMAGE
+          value: $(params.IMAGE_NAME)
+        - name: BUILDER_IMAGE
+          value: >-
+            registry.redhat.io/rhel8/buildah@sha256:ac0b8714cc260c94435cab46fe41b3de0ccbc3d93e38c395fa9d52ac49e521fe
+        - name: SKIP_PUSH
+          value: 'false'
+      runAfter:
+        - building-java-artifact
+      taskRef:
+        kind: Task
+        name: java-jre-distroless
+      workspaces:
+        - name: source
+          workspace: workspace
   workspaces:
     - name: workspace
-

@@ -34,21 +34,29 @@ public class Main {
         }
 
         if (connectList != null && !connectList.isEmpty()) {
-            while (true) {
+            for (;;) {
                 String[] hosts = connectList.split(",");
                 for (String host : hosts) {
                     String[] hostParts = host.split(":");
                     String hostname = hostParts[0];
                     int port = Integer.parseInt(hostParts[1]);
 
-                    URL url = new URL("http://" + hostname + ":" + port);
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    int responseCode = connection.getResponseCode();
-                    System.out.println("Response from " + hostname + ":" + port + ": " + responseCode);
-                    connection.disconnect();
+                    try {
+                        URL url = new URL("http://" + hostname + ":" + port);
+                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                        connection.setRequestMethod("GET");
+                        int responseCode = connection.getResponseCode();
+                        System.out.println("Response from " + hostname + ":" + port + ": " + responseCode);
+                        connection.disconnect();
+                    } catch (IOException e) {
+                        System.out.println("Connection to " + hostname + ":" + port + " failed: " + e.getMessage());
+                    }
                 }
-                Thread.sleep(10000); // Wait for 1 second before making the next round of connections
+                try {
+                    Thread.sleep(30000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

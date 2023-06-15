@@ -12,4 +12,5 @@ resources:
 - stackrox-generate-netpol-task.yaml
 - build-container-image-scan-and-check.yaml 
 - shiftleft-netpol-pipeline.yaml
-- s2i-build-and-scan.yaml
+- build-java-create-container-and-deploy.yaml
+- java-jre-distroless.yaml
