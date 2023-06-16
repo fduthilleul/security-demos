@@ -5,7 +5,6 @@ metadata:
   namespace: frontend 
   labels:
     app: blog
-    exposed: "true"
     app.kubernetes.io/part-of: blog
 spec:
   replicas: 1
