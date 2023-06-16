@@ -12,7 +12,33 @@ spec:
   - Ingress
   - Egress
 status: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: blog-netpol
+  namespace: frontend
+spec:
+  podSelector:
+    matchLabels:
+      app: blog
+  policyTypes:
+  - Ingress
+  - Egress
 
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: default-deny-in-namespace-frontend
+  namespace: frontend
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -446,7 +472,7 @@ status: {}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-from-openshift-ingress
+  name: allow-from-openshift-ingress-to-blog
   namespace: frontend
 spec:
   ingress:
@@ -456,6 +482,40 @@ spec:
           network.openshift.io/policy-group: ingress
   podSelector:
     matchLabels:
-      exposed: 'true'
+      app: blog
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-openshift-ingress-to-asset-cache
+  namespace: frontend
+spec: 
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          network.openshift.io/policy-group: ingress
+  podSelector:
+    matchLabels:
+      app: asset-cache
+  policyTypes:
+  - Ingress
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-from-openshift-ingress-to-webapp
+  namespace: frontend
+spec: 
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          network.openshift.io/policy-group: ingress
+  podSelector:
+    matchLabels:
+      app: webapp 
   policyTypes:
   - Ingress
