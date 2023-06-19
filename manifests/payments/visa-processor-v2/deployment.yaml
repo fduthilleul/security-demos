@@ -38,6 +38,18 @@ spec:
 	            "-Dlisten=8080",
               "/deployments/webapp-1.0-jar-with-dependencies.jar",
             ]
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          securityContext:
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
           imagePullPolicy: Always
           name: visa-processor-v2
           ports:
