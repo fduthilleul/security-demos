@@ -161,7 +161,7 @@ def scan_multiple_deployments(deployments):
     for deployment in deployments:
         skipped_namespaces = ["openshift-", "stackrox", "rhacs"]
         if any(skipped_namespace in deployment for skipped_namespace in skipped_namespaces):
-            print(f"Skipping deployment '{deployment}' due to namespace.")
+            #print(f"Skipping deployment '{deployment}' due to namespace.")
             continue
         deployment_vulnerabilities = scan_deployment(deployment)
         vulnerabilities.extend(deployment_vulnerabilities)
