@@ -130,7 +130,7 @@ def scan_deployment(deployment_name):
                 row = {
                     'Deployment Name': deployment_name,
                     'Image Full Name': image_full_name,
-                    'Vulnerability found on CISA Catalog': cve,
+                    'CVE found on CISA Catalog': cve,
                     'Affected Component': component['name'],
                     'Affected Version': component['version'],
                     'Fixed By': component['fixedBy'] if component['fixedBy'] else 'No fix'
