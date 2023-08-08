@@ -10,6 +10,8 @@ metadata:
 spec:
   tasks:
   - name: stackrox-image-scan
+    retries: 0
+    timeout: "2m"
     params:
     - name: rox_central_endpoint
       value: roxsecrets
