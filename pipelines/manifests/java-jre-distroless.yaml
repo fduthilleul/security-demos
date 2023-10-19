@@ -41,7 +41,7 @@ spec:
       resources: {}
       script: >
 
-        echo "FROM gcr.io/distroless/java17-debian11
+        echo "FROM gcr.io/distroless/java17-debian12
               USER 1001
               ENV SECRET_VALUE='if you can read this this code is vulnerable'
               COPY $(params.PATH_CONTEXT)/target/*.jar /deployments/
@@ -53,23 +53,17 @@ spec:
       name: build-and-push
       resources: {}
       script: >
-        
-        ls -la $(workspaces.source.path)/$(params.PATH_CONTEXT)
 
-        buildah bud --storage-driver=vfs --tls-verify=false \
-           --layers -f $(workspaces.source.path)/Dockerfile.gen -t $(params.IMAGE) .
+        buildah bud --storage-driver=vfs --tls-verify=false --layers -f $(workspaces.source.path)/Dockerfile.gen -t $(params.IMAGE) .
 
         [[ "$(params.SKIP_PUSH)" == "true" ]] && echo "Push skipped" && exit 0
 
-        [[ "$(workspaces.dockerconfig.bound)" == "true" ]] && export
-        DOCKER_CONFIG="$(workspaces.dockerconfig.path)"
+        [[ "$(workspaces.dockerconfig.bound)" == "true" ]] && export DOCKER_CONFIG="$(workspaces.dockerconfig.path)"
 
-        buildah push --storage-driver=vfs --tls-verify=false \
-          --digestfile $(workspaces.source.path)/image-digest $(params.IMAGE) \
-          docker://$(params.IMAGE)
+        buildah push --storage-driver=vfs --tls-verify=false --digestfile $(workspaces.source.path)/image-digest $(params.IMAGE) docker://$(params.IMAGE)
 
-        cat $(workspaces.source.path)/image-digest | tee
-        /tekton/results/IMAGE_DIGEST
+        cat $(workspaces.source.path)/image-digest | tee /tekton/results/IMAGE_DIGEST
+
       securityContext:
         capabilities:
           add:
