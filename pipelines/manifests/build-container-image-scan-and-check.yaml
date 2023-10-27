@@ -5,8 +5,11 @@ metadata:
   namespace: pipeline-demo
 spec:
   params:
-    - default: 'ttl.sh/webapp-log4j-container:24h'
+    - default: 'ttl.sh/webapp-log4j-container'
       name: IMAGE_NAME
+      type: string
+    - default: 24h
+      name: IMAGE_TAG
       type: string
     - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/rhacs-app-demo.git'
       name: GIT_REPO
@@ -34,7 +37,7 @@ spec:
     - name: build
       params:
         - name: IMAGE
-          value: $(params.IMAGE_NAME)
+          value: $(params.IMAGE_NAME):$(params.IMAGE_TAG)
         - name: TLSVERIFY
           value: 'false'
         - name: CONTEXT
@@ -54,7 +57,7 @@ spec:
         - name: rox_api_token
           value: roxsecrets
         - name: image
-          value: $(params.IMAGE_NAME)
+          value: $(params.IMAGE_NAME)@$(tasks.build.results.IMAGE_DIGEST)
         - name: insecure-skip-tls-verify
           value: 'true'
       runAfter:
@@ -69,7 +72,7 @@ spec:
         - name: rox_api_token
           value: roxsecrets
         - name: image
-          value: $(params.IMAGE_NAME)
+          value: $(params.IMAGE_NAME)@$(tasks.build.results.IMAGE_DIGEST)
         - name: output_format
           value: table
         - name: insecure-skip-tls-verify
@@ -82,7 +85,7 @@ spec:
     - name: update-webapp-deployment
       params:
         - name: SCRIPT
-          value: ' oc -n frontend set image deployment/webapp webapp=$(params.IMAGE_NAME)'
+          value: ' oc -n frontend set image deployment/webapp webapp=$(params.IMAGE_NAME)@$(tasks.build.results.IMAGE_DIGEST)'
         - name: VERSION
           value: latest
       runAfter:

@@ -2,7 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
   name: shiftleft-netpol
-  namespace: pipeline-demo 
+  namespace: pipeline-demo
 spec:
   params:
     - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/rhacs-app-demo.git'
@@ -75,7 +75,7 @@ spec:
             git checkout -b netpol
             git add .
             git commit --allow-empty -m "[Tekton] Updating netpols"
-            git push origin HEAD:main --force
+            git push origin HEAD:$(params.branch) --force
 
         - name: USER_HOME
           value: /root
