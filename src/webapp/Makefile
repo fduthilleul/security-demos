@@ -1,4 +1,4 @@
 build:
-	podman build --label "app=webapp" -f Dockerfile -t quay.io/vuln/webapp:latest .
+	docker build --label "app=webapp" -f Dockerfile -t quay.io/vuln/webapp:latest .
 push:
-	podman push quay.io/vuln/webapp:latest
+	docker push quay.io/vuln/webapp:latest
